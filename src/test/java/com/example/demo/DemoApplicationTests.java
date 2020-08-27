@@ -1,15 +1,32 @@
 package com.example.demo;
 
+import com.example.demo.rabbitmq.message.MessageDemo1;
+import com.example.demo.rabbitmq.producer.ProducerDemo1;
+import com.example.demo.rabbitmq.producer.ProducerDemo2;
+import com.example.demo.service.DemoService;
 import com.rabbitmq.client.*;
+import org.apache.juli.logging.LogFactory;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.AsyncRabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 
-@SpringBootTest
+@SpringBootTest(classes = DemoApplication.class)
 class DemoApplicationTests {
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    private DemoService demoService;
+    @Autowired
+    private ProducerDemo1 producerDemo1;
+    @Autowired
+    private ProducerDemo2 producerDemo2;
+
     private static final String IP_ADDRESS = "47.98.46.185";
     private static final Integer PORT = 5672;
     private static final String USERNAME = "admin";
@@ -141,4 +158,36 @@ class DemoApplicationTests {
         connection.close();
     }
 
+    @Test
+    public void testAsync1(){
+        // 同步任务
+        long now = System.currentTimeMillis();
+        demoService.excuteLog1();
+        demoService.excuteLog2();
+
+        System.out.println("任务1执行时间：" + (System.currentTimeMillis() - now));
+    }
+
+    @Test
+    public void testAsync2(){
+        long now = System.currentTimeMillis();
+        // 发起异步执行任务，但执行未完成
+        demoService.excuteLogForAsync1();
+        demoService.excuteLogForAsync2();
+
+        System.out.println("任务2执行时间：" + (System.currentTimeMillis() - now));
+    }
+
+    @Test
+    public void testAsync3() throws ExecutionException, InterruptedException {
+        long now = System.currentTimeMillis();
+        // 发起异步任务
+        Future<Integer> integerFutureResult1 = demoService.executeAsyncWithFuture1();
+        Future<Integer> integerFutureResult2 = demoService.executeAsyncWithFuture2();
+        // 阻塞等待结果
+        integerFutureResult1.get();
+        integerFutureResult2.get();
+
+        System.out.println("任务3执行时间：" + (System.currentTimeMillis() - now));
+    }
 }

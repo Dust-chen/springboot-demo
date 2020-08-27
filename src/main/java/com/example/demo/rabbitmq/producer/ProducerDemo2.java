@@ -1,23 +1,23 @@
 package com.example.demo.rabbitmq.producer;
 
-import com.example.demo.rabbitmq.message.MessageDemo1;
-import org.springframework.amqp.rabbit.AsyncRabbitTemplate;
+import com.example.demo.rabbitmq.message.MessageDemo2;
+import org.springframework.amqp.rabbit.core.BatchingRabbitTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import com.example.demo.rabbitmq.message.MessageDemo1;
 
 @Component
-public class ProducerDemo1 {
+public class ProducerDemo2 {
     @Autowired
-    private RabbitTemplate rabbitTemplate;
+    private BatchingRabbitTemplate rabbitTemplate;
 
     // 同步发送消息
     public void syncSend(Integer id){
         MessageDemo1 message = new MessageDemo1();
         message.setId(id);
 
-        rabbitTemplate.convertAndSend(MessageDemo1.EXCHANGE, MessageDemo1.ROUTING_KEY, message);
+        rabbitTemplate.convertAndSend(MessageDemo2.EXCHANGE, MessageDemo2.ROUTING_KEY, message);
     }
 }

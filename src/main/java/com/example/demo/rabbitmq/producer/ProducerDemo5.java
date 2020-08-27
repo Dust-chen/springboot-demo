@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProducerDemo05 {
+public class ProducerDemo5 {
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    public void syncSend(Integer id){
+        syncSend(id, null);
+    }
 
     public void syncSend(Integer id, Integer delay){
         MessageDemo5 message = new MessageDemo5();

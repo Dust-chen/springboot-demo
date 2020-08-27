@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RetryRabbitmqConfig {
+public class RetryRabbitConfig {
 
     /**
      * Direct Exchange 示例的配置类

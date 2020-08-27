@@ -1,37 +1,39 @@
 package com.example.demo.rabbitmq.config;
 
-import com.example.demo.rabbitmq.message.MessageDemo1;
+import com.example.demo.rabbitmq.message.MessageDemo2;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.batch.BatchingStrategy;
 import org.springframework.amqp.rabbit.batch.SimpleBatchingStrategy;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.BatchingRabbitTemplate;
+import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 
 @Configuration
-public class RabbitConfig {
+public class BatchRabbitConfig {
     /**
      * Direct Exchange 示例的配置类
      */
     public static class DirectExchangeDemoConfiguration {
         // 创建 Queue
         @Bean
-        public Queue demo01Queue() {
-            return new Queue(MessageDemo1.QUEUE, // Queue 名字
+        public Queue demo02Queue() {
+            return new Queue(MessageDemo2.QUEUE, // Queue 名字
                     true, // durable: 是否持久化
                     false, // exclusive: 是否排它
                     false); // autoDelete: 是否自动删除
         }
         // 创建 Direct Exchange
         @Bean
-        public DirectExchange demo01Exchange() {
-            return new DirectExchange(MessageDemo1.EXCHANGE,
+        public DirectExchange demo02Exchange() {
+            return new DirectExchange(MessageDemo2.EXCHANGE,
                     true,  // durable: 是否持久化
                     false);  // exclusive: 是否排它
         }
@@ -40,8 +42,8 @@ public class RabbitConfig {
         // Routing key：Demo01Message.ROUTING_KEY
         // Queue：Demo01Message.QUEUE
         @Bean
-        public Binding demo01Binding() {
-            return BindingBuilder.bind(demo01Queue()).to(demo01Exchange()).with(MessageDemo1.ROUTING_KEY);
+        public Binding demo02Binding() {
+            return BindingBuilder.bind(demo02Queue()).to(demo02Exchange()).with(MessageDemo2.ROUTING_KEY);
         }
     }
 
@@ -60,5 +62,15 @@ public class RabbitConfig {
         BatchingRabbitTemplate batchTemplate = new BatchingRabbitTemplate(batchingStrategy, taskScheduler);
         batchTemplate.setConnectionFactory(connectionFactory);
         return batchTemplate;
+    }
+
+    @Bean(name = "consumerBatchContainerFactory")
+    public SimpleRabbitListenerContainerFactory consumerBatchContainerFactory (SimpleRabbitListenerContainerFactoryConfigurer configurer, ConnectionFactory connectionFactory){
+        // 创建 SimpleRabbitListenerContainerFactory 对象
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        configurer.configure(factory, connectionFactory);
+        // <X> 额外添加批量消费的属性
+        factory.setBatchListener(true);
+        return factory;
     }
 }
