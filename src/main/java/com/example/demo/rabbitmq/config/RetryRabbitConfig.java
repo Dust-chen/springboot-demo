@@ -16,7 +16,7 @@ public class RetryRabbitConfig {
         @Bean
         public Queue demo04Queue() {
             return QueueBuilder.durable(MessageDemo4.QUEUE) // durable: 是否持久化
-                    .exclusive() // exclusive: 是否排它
+                    //.exclusive() // exclusive: 是否排它
                     .autoDelete() // autoDelete: 是否自动删除
                     .deadLetterExchange(MessageDemo4.EXCHANGE).deadLetterRoutingKey(MessageDemo4.DEAD_ROUTING_KEY).build();
         }

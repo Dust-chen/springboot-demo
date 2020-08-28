@@ -16,7 +16,7 @@ public class DelayRabbitConfig {
         @Bean
         public Queue demo05Queue() {
             return QueueBuilder.durable(MessageDemo5.QUEUE) // durable: 是否持久化
-                    .exclusive() // exclusive: 是否排它
+                    //.exclusive() // exclusive: 是否排它
                     .autoDelete() // autoDelete: 是否自动删除
                     .ttl(10 * 1000) // 设置队列里的默认过期时间为 10 秒
                     .deadLetterExchange(MessageDemo5.EXCHANGE).deadLetterRoutingKey(MessageDemo5.DELAY_ROUTING_KEY).build();
