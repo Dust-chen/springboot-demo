@@ -8,14 +8,14 @@ import com.example.demo.rabbitmq.message.MessageDemo4;
 
 @Component
 public class ProducerDemo4 {
-    @Autowired
-    private BatchingRabbitTemplate rabbitTemplate;
+//    @Autowired
+//    private BatchingRabbitTemplate rabbitTemplate;
 
     // 同步发送消息
     public void syncSend(Integer id){
         MessageDemo4 message = new MessageDemo4();
         message.setId(id);
 
-        rabbitTemplate.convertAndSend(MessageDemo4.EXCHANGE, MessageDemo4.ROUTING_KEY, message);
+//        rabbitTemplate.convertAndSend(MessageDemo4.EXCHANGE, MessageDemo4.ROUTING_KEY, message);
     }
 }

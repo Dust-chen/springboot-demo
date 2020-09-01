@@ -47,22 +47,22 @@ public class BatchRabbitConfig {
         }
     }
 
-    @Bean
-    public BatchingRabbitTemplate batchingRabbitTemplate(ConnectionFactory connectionFactory){
-        // 创建BatchingStrategy 对象，代表批量策略
-        int batchSize = 16384; // 超过收集的消息数量的最大条数。
-        int bufferLimit = 33554432; // 每次批量发送消息的最大内存
-        int timeout = 30000; // 超过收集的时间的最大等待时长，单位：毫秒
-        BatchingStrategy batchingStrategy = new SimpleBatchingStrategy(batchSize, bufferLimit, timeout);
-
-        // 创建 TaskScheduler 对象，用于实现超时发送的定时器
-        TaskScheduler taskScheduler = new ConcurrentTaskScheduler();
-
-        // 创建 BatchingRabbitTemplate 对象
-        BatchingRabbitTemplate batchTemplate = new BatchingRabbitTemplate(batchingStrategy, taskScheduler);
-        batchTemplate.setConnectionFactory(connectionFactory);
-        return batchTemplate;
-    }
+//    @Bean
+//    public BatchingRabbitTemplate batchingRabbitTemplate(ConnectionFactory connectionFactory){
+//        // 创建BatchingStrategy 对象，代表批量策略
+//        int batchSize = 16384; // 超过收集的消息数量的最大条数。
+//        int bufferLimit = 33554432; // 每次批量发送消息的最大内存
+//        int timeout = 30000; // 超过收集的时间的最大等待时长，单位：毫秒
+//        BatchingStrategy batchingStrategy = new SimpleBatchingStrategy(batchSize, bufferLimit, timeout);
+//
+//        // 创建 TaskScheduler 对象，用于实现超时发送的定时器
+//        TaskScheduler taskScheduler = new ConcurrentTaskScheduler();
+//
+//        // 创建 BatchingRabbitTemplate 对象
+//        BatchingRabbitTemplate batchTemplate = new BatchingRabbitTemplate(batchingStrategy, taskScheduler);
+//        batchTemplate.setConnectionFactory(connectionFactory);
+//        return batchTemplate;
+//    }
 
     @Bean(name = "consumerBatchContainerFactory")
     public SimpleRabbitListenerContainerFactory consumerBatchContainerFactory (SimpleRabbitListenerContainerFactoryConfigurer configurer, ConnectionFactory connectionFactory){
