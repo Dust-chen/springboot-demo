@@ -58,6 +58,8 @@ spring:
           enabled: true # 开启消费重试机制
           max-attempts: 3 # 最大重试次数。默认为 3 。
           initial-interval: 1000 # 重试间隔，单位为毫秒。默认为 1000 。
+        # 配置 Consumer 手动提交
+        acknowledge-mode: manual
   task:
     # Spring 执行器配置，对应 TaskExecutionProperties 配置类。对于 Spring 异步任务，会使用该执行器。
     execution:
