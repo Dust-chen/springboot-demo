@@ -51,6 +51,8 @@ spring:
     port: 5672
     username: admin
     password: admin
+    publisher-confirm-type: correlated # 设置 Confirm 类型为 SIMPLE/CORRELATED 。
+    publisher-returns: true # 设置returnCallback
     listener:
       simple:
         # 对应 RabbitProperties.ListenerRetry 类

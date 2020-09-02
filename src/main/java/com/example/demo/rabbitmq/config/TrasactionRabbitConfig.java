@@ -32,12 +32,12 @@ public class TrasactionRabbitConfig {
         return BindingBuilder.bind(queueDemo11()).to(exchangeDemo11()).with(TransactionMessageDemo11.ROUTING_KEY_NAME);
     }
 
-    @Bean
-    public RabbitTransactionManager rabbitTransactionManager(ConnectionFactory connectionFactory, RabbitTemplate rabbitTemplate){
-        // <Y> 设置 RabbitTemplate 支持事务
-        rabbitTemplate.setChannelTransacted(true);
-
-        // 创建 RabbitTransactionManager 对象
-        return new RabbitTransactionManager(connectionFactory);
-    }
+//    @Bean
+//    public RabbitTransactionManager rabbitTransactionManager(ConnectionFactory connectionFactory, RabbitTemplate rabbitTemplate){
+//        // <Y> 设置 RabbitTemplate 支持事务
+//        rabbitTemplate.setChannelTransacted(true);
+//
+//        // 创建 RabbitTransactionManager 对象
+//        return new RabbitTransactionManager(connectionFactory);
+//    }
 }
