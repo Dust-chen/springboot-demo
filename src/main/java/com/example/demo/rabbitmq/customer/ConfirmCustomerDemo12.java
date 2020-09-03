@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @Component
 @RabbitListener(queues = ConfirmMessageDemo12.QUEUE)
-public class ConfirmConsumerDemo12 {
+public class ConfirmCustomerDemo12 {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @RabbitHandler

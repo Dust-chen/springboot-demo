@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
                         declare = "false"
                 )
         ))
-public class BroadcastConsumerDemo8 {
+public class BroadcastCustomerDemo8 {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @RabbitHandler

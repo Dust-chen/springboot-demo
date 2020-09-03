@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @RabbitListener(queues = OrderMessageDemo10.QUEUE_1)
 @RabbitListener(queues = OrderMessageDemo10.QUEUE_2)
 @RabbitListener(queues = OrderMessageDemo10.QUEUE_3)
-public class OrderConsumerDemo10 {
+public class OrderCustomerDemo10 {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @RabbitHandler(isDefault = true)
